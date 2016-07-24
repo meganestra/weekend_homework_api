@@ -39,34 +39,37 @@ var getCountryEnergyData = function(globalEnergyDataRef) {
 
     globalEnergyDataRef.forEach(function(element, index){
 
-        if (index < 2) {
+        if (index < 5) {
 
             var countryEnergyDataUrl = 'http://api.eia.gov/series/?api_key=A3C1692494277DA639124A9E622A29A4&series_id=' + element.series_id;
             var countryEnergyDataRequest = new XMLHttpRequest();
             countryEnergyDataRequest.open("GET", countryEnergyDataUrl);
             countryEnergyDataRequest.onload = function() {
                 if (countryEnergyDataRequest.status === 200) {
-                    var jsonStringCountryEnergyData = countryEnergyDataRequest.responseText;
-                    countryEnergyData = JSON.parse(jsonStringCountryEnergyData);
-                    console.log("1", countryEnergyData);
-                    allCountryEnergyData.push(countryEnergyData);
-                    console.log("2", allCountryEnergyData);
 
-                    // createChartData(countryEnergyData);
-                    // new PieChart(createChartData(countryEnergyData));
-                    // updateDisplay(countryEnergyData);
+                    var jsonStringCountryEnergyData = countryEnergyDataRequest.responseText;
+
+                    console.log(jsonStringCountryEnergyData)
+                    
+                    countryEnergyData = JSON.parse(jsonStringCountryEnergyData);
+
+                    console.log("array-pre", allCountryEnergyData)
+
+                    allCountryEnergyData.push(countryEnergyData);
+
+                    console.log("array-post", allCountryEnergyData)
 
                 };
-                console.log("3", allCountryEnergyData);
 
-                // createChartData(allCountryEnergyData);
-                new PieChart(createChartData(countryEnergyData));
-                updateDisplay(countryEnergyData);
+                console.log("array-out-if", allCountryEnergyData)
+
+                new PieChart(createChartData(allCountryEnergyData));
+                // updateDisplay(countryEnergyData);
 
             };
-            console.log("5", allCountryEnergyData);
+
             countryEnergyDataRequest.send(null);
-            console.log("4", allCountryEnergyData);
+
         };
     });
     return allCountryEnergyData
@@ -93,60 +96,53 @@ var getCountriesData = function() {
 // -----------------------
 // -----------------------
 
-var updateDisplay = function(countryEnergyData) {
+// var updateDisplay = function(countryEnergyData) {
 
-    // console.log("Table data", countryEnergyData);
+//     // console.log("Table data", countryEnergyData);
 
-    // -----------------------
-    // global energy cons table for all countries
-    // -----------------------
+//     // -----------------------
+//     // global energy cons table for all countries
+//     // -----------------------
 
-    var table = document.getElementById("myTable");
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var nameData = countryEnergyData.series[0].name.replace("Total Primary Energy Consumption, ", "");
-    var formattedNameData = nameData.replace(", Annual", "");
-    cell1.innerHTML = formattedNameData;
-    cell2.innerHTML = countryEnergyData.series[0].data[0][1].toFixed(3);
+//     var table = document.getElementById("myTable");
+//     var row = table.insertRow(0);
+//     var cell1 = row.insertCell(0);
+//     var cell2 = row.insertCell(1);
+//     var nameData = countryEnergyData.series[0].name.replace("Total Primary Energy Consumption, ", "");
+//     var formattedNameData = nameData.replace(", Annual", "");
+//     cell1.innerHTML = formattedNameData;
+//     cell2.innerHTML = countryEnergyData.series[0].data[0][1].toFixed(3);
 
-    // -----------------------
-    // select dropdown
-    // -----------------------
+//     // -----------------------
+//     // select dropdown
+//     // -----------------------
 
-    var select = document.getElementById('mySelect');
-    var option = document.createElement('option');
-    option.innerText = formattedNameData;
-    select.appendChild(option);
+//     var select = document.getElementById('mySelect');
+//     var option = document.createElement('option');
+//     option.innerText = formattedNameData;
+//     select.appendChild(option);
 
-};
+// };
 
 
-var createChartData = function(countryEnergyData) {
+var createChartData = function(allCountryEnergyData) {
 
     // console.log("Chart Data", countryEnergyData);
 
     data = [];
 
-    countryEnergyData.series.forEach(function(country){
+    allCountryEnergyData.forEach(function(country) {
 
-        yData = countryEnergyData.series[0].data[0][1].toFixed(3);
-
-        // console.log(yData);
-
+        yData = country.series[0].data[0][1].toFixed(3);
         yDataToNumber = parseFloat(yData);
 
-        // console.log(yDataToNumber);
-
-        result = {name: country.name.replace("Total Primary Energy Consumption, ", ""), y: yDataToNumber };
+        result = {name: country.series[0].name.replace("Total Primary Energy Consumption, ", ""), y: yDataToNumber};
 
         data.push(result);
-        // console.log(result);
 
     });
 
     return data;
-   // console.log(data);
 
 };
 
