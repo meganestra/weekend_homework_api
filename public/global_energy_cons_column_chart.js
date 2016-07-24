@@ -1,11 +1,11 @@
-var GlobalEnergyConsColumnChart = function(globalEnergyConsumptionData) {
+var PieChart = function(globalEnergyConsumptionData) {
 
-  var container = document.getElementById('globalEnergyColumnChart');
+  var container = document.getElementById('pieChart');
 
   var chart = new Highcharts.Chart({
 
     chart: {
-      type: 'column',
+      type: 'pie',
       renderTo: container
     },
 
@@ -13,11 +13,16 @@ var GlobalEnergyConsColumnChart = function(globalEnergyConsumptionData) {
       text: "Total global energy consumption"
     },
 
-    series: globalEnergyConsumptionData,
+    series: [
 
-    xAxis: {
-      categories: []
-    }
+      {
+
+      name: "test",
+      data: globalEnergyConsumptionData
+
+      }
+
+    ]
 
   })
 
