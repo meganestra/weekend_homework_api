@@ -1,14 +1,14 @@
 h1 {
   font-size: 50px;
-  font-family: 'Julius Sans One', sans-serif;
-  color: #7f9eb2;
+  font-family: 'Quantico', sans-serif;
+  color: #383A3F;
   text-align: center;
 }
 
 select {
     border: 2px solid #274c5e;
     border-radius: 4px;
-    font-family: 'Julius Sans One', sans-serif;
+    font-family: 'Quantico', sans-serif;
 }
 
 table {
@@ -16,7 +16,7 @@ table {
   border-radius: 5px;
   width: 100%;
   table-layout: fixed;
-  font-family: 'Julius Sans One', sans-serif;
+  font-family: 'Quantico', sans-serif;
 }
 
 tr:hover {
@@ -35,4 +35,8 @@ td {
     height: 50px;
     text-align: center;
     vertical-align: center;
+}
+
+pieChart {
+  font-family: 'Quantico', sans-serif;
 }

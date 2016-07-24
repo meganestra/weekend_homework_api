@@ -10,20 +10,23 @@ var PieChart = function(globalEnergyConsumptionData) {
     },
 
     title: {
-      text: "Total global energy consumption"
+      text: "total global energy consumption - quadrillion btu"
     },
 
-    series: [
+    series: [{
 
-      {
-
-      name: "test",
+      name: "total annual energy consumption (Quadrillion Btu)",
       data: globalEnergyConsumptionData
 
-      }
-
-    ]
-
+    }]
   })
+
+  Highcharts.setOptions({
+      chart: {
+          style: {
+              fontFamily: 'Quantico'
+          }
+      }
+  });
 
 };
