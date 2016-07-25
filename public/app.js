@@ -24,7 +24,6 @@ var getGlobalEnergyData = function() {
             var globalEnergyData = JSON.parse(jsonStringGlobalEnergyData);
             var globalEnergyDataRef = globalEnergyData.category.childseries;
             getCountryEnergyData(globalEnergyDataRef);
-
         };
     };
     globalEnergyDataRequest.send();
@@ -47,25 +46,15 @@ var getCountryEnergyData = function(globalEnergyDataRef) {
             countryEnergyDataRequest.open("GET", countryEnergyDataUrl);
             countryEnergyDataRequest.onload = function() {
                 if (countryEnergyDataRequest.status === 200) {
-
                     var jsonStringCountryEnergyData = countryEnergyDataRequest.responseText;
-                    
                     countryEnergyData = JSON.parse(jsonStringCountryEnergyData);
-
                     allCountryEnergyData.push(countryEnergyData);
-
                 };
-
                 new PieChart(createPieChartData(allCountryEnergyData));
-
                 // main(allCountryEnergyData);
-
                 updateDisplay(countryEnergyData);
-
             };
-
             countryEnergyDataRequest.send(null);
-
         };
     });
     return allCountryEnergyData
