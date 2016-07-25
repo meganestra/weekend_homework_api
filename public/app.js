@@ -24,6 +24,7 @@ var getGlobalEnergyData = function() {
             var globalEnergyData = JSON.parse(jsonStringGlobalEnergyData);
             var globalEnergyDataRef = globalEnergyData.category.childseries;
             getCountryEnergyData(globalEnergyDataRef);
+
         };
     };
     globalEnergyDataRequest.send();
@@ -39,7 +40,7 @@ var getCountryEnergyData = function(globalEnergyDataRef) {
 
     globalEnergyDataRef.forEach(function(element, index){
 
-        if (index < 10) {
+        if (index < 100) {
 
             var countryEnergyDataUrl = 'http://api.eia.gov/series/?api_key=A3C1692494277DA639124A9E622A29A4&series_id=' + element.series_id;
             var countryEnergyDataRequest = new XMLHttpRequest();
@@ -55,7 +56,10 @@ var getCountryEnergyData = function(globalEnergyDataRef) {
 
                 };
 
-                new PieChart(createChartData(allCountryEnergyData));
+                new PieChart(createPieChartData(allCountryEnergyData));
+
+                // main(allCountryEnergyData);
+
                 updateDisplay(countryEnergyData);
 
             };
@@ -105,23 +109,25 @@ var updateDisplay = function(countryEnergyData) {
     cell1.innerHTML = formattedNameData;
     cell2.innerHTML = countryEnergyData.series[0].data[0][1].toFixed(3);
 
-//     // -----------------------
-//     // select dropdown
-//     // -----------------------
+    // -----------------------
+    // select dropdown
+    // -----------------------
 
-//     var select = document.getElementById('mySelect');
-//     var option = document.createElement('option');
-//     option.innerText = formattedNameData;
-//     select.appendChild(option);
+    var select = document.getElementById('mySelect');
+    var option = document.createElement('option');
+    option.innerText = formattedNameData;
+    select.appendChild(option);
 
 };
 
+// -----------------------
+// -----------------------
 
-var createChartData = function(allCountryEnergyData) {
+var createPieChartData = function(allCountryEnergyData) {
 
     // console.log("Chart Data", countryEnergyData);
 
-    data = [];
+    var data = [];
 
     allCountryEnergyData.forEach(function(country) {
 
@@ -141,9 +147,72 @@ var createChartData = function(allCountryEnergyData) {
 
 };
 
+// -----------------------
+// -----------------------
 
+// var createLineChartData = function(selectedCountry) {
 
+//     var seriesData = [];
+//     var data = [];
 
+//     selectedCountry.series[0].data.forEach(function(year) {
+
+//         data.push(year[1]);
+
+//     });
+
+//     return data;
+
+//     var nameData = country.series[0].name.replace("Total Primary Energy Consumption, ", "");
+//     var formattedNameData = nameData.replace(", Annual", "");
+
+//     result = {name: formattedNameData, data: data};
+
+//     seriesData.push(result);
+
+//     return seriesData;
+
+// };
+
+// -----------------------
+// -----------------------
+
+// var main = function (allCountryEnergyData) {
+//     populateSelect(allCountryEnergyData);
+//     console.log("main function", allCountryEnergyData);
+//     var cached = localStorage.getItem("selectedCountry");
+//     var selected = allCountryEnergyData[0];
+//     if(cached){
+//         selected = JSON.parse(cached);
+//         document.querySelector('#mySelect').selectedIndex = selected.index;
+//     };
+//     createLineChartData(selected);
+// };
+
+// -----------------------
+// -----------------------
+
+// var populateSelect = function (allCountryEnergyData) {
+//     var parent = document.querySelector('#mySelect');
+//     allCountryEnergyData.forEach(function (country, index) {
+//         country.index = index;
+//         var option = document.createElement("option");
+//         option.value = index.toString();
+
+//         var nameData = country.series[0].name.replace("Total Primary Energy Consumption, ", "");
+//         var formattedNameData = nameData.replace(", Annual", "");
+
+//         option.text = formattedNameData;
+//         parent.appendChild(option);
+//     });
+//     parent.style.display = 'block';
+//     parent.addEventListener('change', function (event) {
+//         var index = this.value;
+//         var country = allCountryEnergyData[index];
+//         updateDisplay(country);
+//         localStorage.setItem("selectedCountry",JSON.stringify(country));
+//     });
+// };
 
 
 

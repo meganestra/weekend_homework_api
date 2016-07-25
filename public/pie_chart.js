@@ -18,7 +18,11 @@ var PieChart = function(globalEnergyConsumptionData) {
       name: "total annual energy consumption (Quadrillion Btu)",
       data: globalEnergyConsumptionData
 
-    }]
+    }],
+
+    credits: {
+      enabled: false
+    }
   })
 
   Highcharts.setOptions({
